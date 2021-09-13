@@ -29,4 +29,8 @@ public class LeerArchivo {
         }
     }
     
+    //--- Exportar Archivo
+    public void exportArchivo() {        
+    }
+    
 }

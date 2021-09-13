@@ -9,8 +9,9 @@ public class Insert extends javax.swing.JDialog {
     public Insert(Principal parent, boolean modal, boolean init) {
         super(parent, modal);
         initComponents();
-        this.menu = menu;
+        this.menu = parent;
         this.init = init;
+        setSize(400, 200);
         setLocationRelativeTo(null);
     }
          
@@ -23,6 +24,8 @@ public class Insert extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Patrón");
+
+        panelD.setBackground(new java.awt.Color(51, 255, 147));
 
         btnBuscar.setText("Buscar");
 
@@ -44,7 +47,7 @@ public class Insert extends javax.swing.JDialog {
                 .addGroup(panelDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
                     .addComponent(txtFPatron, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

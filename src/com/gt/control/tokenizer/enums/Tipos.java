@@ -1,7 +1,7 @@
 package com.gt.control.tokenizer.enums;
 
 public enum Tipos {
-//--- Tokens Válidos       
+//---      
     
     IDENTIFICADOR("Identificador"),
     NUM_ENTERO("Número Entero"),

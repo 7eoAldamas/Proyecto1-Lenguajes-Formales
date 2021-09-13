@@ -1,6 +1,7 @@
 package com.gt.vista.GUI;
 
 import com.gt.archivos.LeerArchivo;
+import java.awt.HeadlessException;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ public class Principal extends JFrame {
     
     public Principal() {
         initComponents();
+        setSize(900, 600);
         setLocationRelativeTo(null);
     }
 
@@ -37,6 +39,8 @@ public class Principal extends JFrame {
         setTitle("Tokenizer.2");
         setResizable(false);
 
+        panelP.setBackground(new java.awt.Color(218, 247, 166));
+
         txtArea.setColumns(20);
         txtArea.setRows(5);
         scrollPArea.setViewportView(txtArea);
@@ -58,29 +62,28 @@ public class Principal extends JFrame {
                         .addGap(97, 97, 97)
                         .addComponent(scrollPArea, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelPLayout.createSequentialGroup()
-                        .addGap(156, 156, 156)
+                        .addGap(392, 392, 392)
+                        .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelPLayout.createSequentialGroup()
+                        .addGap(157, 157, 157)
                         .addComponent(scrollPLog, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(97, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(396, 396, 396))
         );
         panelPLayout.setVerticalGroup(
             panelPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(scrollPArea, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGap(72, 72, 72)
                 .addComponent(btnAnalizar)
-                .addGap(39, 39, 39)
-                .addComponent(scrollPLog, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGap(45, 45, 45)
+                .addComponent(scrollPLog, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         menuArchivos.setText("Archivos");
 
-        itemCargarDatos.setText("Cargar Archivo");
+        itemCargarDatos.setText("Nuevo");
         itemCargarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemCargarDatosActionPerformed(evt);
@@ -90,7 +93,7 @@ public class Principal extends JFrame {
         itemCargarDatos.getAccessibleContext().setAccessibleDescription("");
         itemCargarDatos.getAccessibleContext().setAccessibleParent(menuArchivos);
 
-        itemGuardar.setText("Guardar/Exportar");
+        itemGuardar.setText("Guardar");
         itemGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemGuardarActionPerformed(evt);
@@ -104,9 +107,19 @@ public class Principal extends JFrame {
         menuReportes.setText("Reportes");
 
         itemRErrores.setText("Errores");
+        itemRErrores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemRErroresActionPerformed(evt);
+            }
+        });
         menuReportes.add(itemRErrores);
 
         itemRTokens.setText("Tokens");
+        itemRTokens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemRTokensActionPerformed(evt);
+            }
+        });
         menuReportes.add(itemRTokens);
 
         menuP.add(menuReportes);
@@ -154,7 +167,7 @@ public class Principal extends JFrame {
                 File path = file.getSelectedFile();
                 archivo = new LeerArchivo(path, txtArea);                
             }
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Error", "Carga de Archivo", JOptionPane.ERROR_MESSAGE);
         }      
     }//GEN-LAST:event_itemCargarDatosActionPerformed
@@ -162,6 +175,16 @@ public class Principal extends JFrame {
     private void btnAnalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalizarMouseClicked
         // Evento Analizar
     }//GEN-LAST:event_btnAnalizarMouseClicked
+
+    private void itemRErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRErroresActionPerformed
+        // Evento Reporte de Errores
+        new Errores(this, true, true).setVisible(true);
+    }//GEN-LAST:event_itemRErroresActionPerformed
+
+    private void itemRTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRTokensActionPerformed
+        // Evento Reportes de Tokens      
+        new Tokens(this, true, true).setVisible(true);
+    }//GEN-LAST:event_itemRTokensActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizar;
