@@ -1,6 +1,7 @@
 package com.gt.vista.GUI;
 
 import com.gt.archivos.Archivo;
+import com.gt.control.Validaciones;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -10,6 +11,7 @@ public class Principal extends JFrame {
 //--- Ventana Principal - Analizador Léxico        
 
     private Archivo archivo = new Archivo();
+    private Validaciones validaciones = new Validaciones();
     private File aux;
 
     public Principal() {
@@ -169,7 +171,7 @@ public class Principal extends JFrame {
             File auxPath = aux.getAbsoluteFile();
             archivo.guardarArchivo(auxPath, txtArea);
         } else {
-            JOptionPane.showMessageDialog(txtArea, "La acción no se puede ejecutar", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(txtArea, "La acción no se puede ejecutar", "Información", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_itemGuardarActionPerformed
 
@@ -183,6 +185,11 @@ public class Principal extends JFrame {
 
     private void btnAnalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalizarMouseClicked
         // Evento Analizar
+        if (txtArea.getText() != null) {
+            validaciones.automata(validaciones.leerTexto(txtArea));
+        } else {
+            JOptionPane.showMessageDialog(txtArea, "La acción no se puede ejecutar", "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnAnalizarMouseClicked
 
     private void itemRErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRErroresActionPerformed

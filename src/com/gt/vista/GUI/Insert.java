@@ -1,10 +1,13 @@
 package com.gt.vista.GUI;
 
+import com.gt.control.Patron;
+
 public class Insert extends javax.swing.JDialog {
 //--- Ventana Ingresar Patrón - Analizador Léxico
     
     private Principal menu;
     private boolean init;
+    private Patron patron = new Patron();
     
     public Insert(Principal parent, boolean modal, boolean init) {
         super(parent, modal);
@@ -28,6 +31,11 @@ public class Insert extends javax.swing.JDialog {
         panelD.setBackground(new java.awt.Color(51, 255, 147));
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelDLayout = new javax.swing.GroupLayout(panelD);
         panelD.setLayout(panelDLayout);
@@ -63,6 +71,12 @@ public class Insert extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        // Evento Buscar Patrón
+        patron.guardarPatron(txtFPatron);
+        dispose();
+    }//GEN-LAST:event_btnBuscarMouseClicked
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
