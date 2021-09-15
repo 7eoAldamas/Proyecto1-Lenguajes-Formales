@@ -1,7 +1,6 @@
 package com.gt.vista.GUI;
 
-import com.gt.archivos.LeerArchivo;
-import java.awt.HeadlessException;
+import com.gt.archivos.Archivo;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -9,9 +8,10 @@ import javax.swing.JOptionPane;
 
 public class Principal extends JFrame {
 //--- Ventana Principal - Analizador Léxico        
-    
-    private LeerArchivo archivo;
-    
+
+    private Archivo archivo = new Archivo();
+    private File aux;
+
     public Principal() {
         initComponents();
         setSize(900, 600);
@@ -28,8 +28,9 @@ public class Principal extends JFrame {
         btnAnalizar = new javax.swing.JButton();
         menuP = new javax.swing.JMenuBar();
         menuArchivos = new javax.swing.JMenu();
-        itemCargarDatos = new javax.swing.JMenuItem();
+        itemAbrir = new javax.swing.JMenuItem();
         itemGuardar = new javax.swing.JMenuItem();
+        itemGuardarComo = new javax.swing.JMenuItem();
         menuReportes = new javax.swing.JMenu();
         itemRErrores = new javax.swing.JMenuItem();
         itemRTokens = new javax.swing.JMenuItem();
@@ -83,15 +84,15 @@ public class Principal extends JFrame {
 
         menuArchivos.setText("Archivos");
 
-        itemCargarDatos.setText("Nuevo");
-        itemCargarDatos.addActionListener(new java.awt.event.ActionListener() {
+        itemAbrir.setText("Abrir");
+        itemAbrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemCargarDatosActionPerformed(evt);
+                itemAbrirActionPerformed(evt);
             }
         });
-        menuArchivos.add(itemCargarDatos);
-        itemCargarDatos.getAccessibleContext().setAccessibleDescription("");
-        itemCargarDatos.getAccessibleContext().setAccessibleParent(menuArchivos);
+        menuArchivos.add(itemAbrir);
+        itemAbrir.getAccessibleContext().setAccessibleDescription("");
+        itemAbrir.getAccessibleContext().setAccessibleParent(menuArchivos);
 
         itemGuardar.setText("Guardar");
         itemGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +102,14 @@ public class Principal extends JFrame {
         });
         menuArchivos.add(itemGuardar);
         itemGuardar.getAccessibleContext().setAccessibleParent(menuArchivos);
+
+        itemGuardarComo.setText("Guardar Como");
+        itemGuardarComo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemGuardarComoActionPerformed(evt);
+            }
+        });
+        menuArchivos.add(itemGuardarComo);
 
         menuP.add(menuArchivos);
 
@@ -155,22 +164,22 @@ public class Principal extends JFrame {
     }//GEN-LAST:event_menuBuscarMouseClicked
 
     private void itemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarActionPerformed
-        // Evento Guargar/Exportar Archivo (txt)        
+        // Evento Guargar - Archivo (txt)  
+        if (aux != null) {
+            File auxPath = aux.getAbsoluteFile();
+            archivo.guardarArchivo(auxPath, txtArea);
+        } else {
+            JOptionPane.showMessageDialog(txtArea, "La acción no se puede ejecutar", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_itemGuardarActionPerformed
 
-    private void itemCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCargarDatosActionPerformed
-        // Evento Cargar Datos 
-        try {
-            JFileChooser file = new JFileChooser();   
-            int select = file.showOpenDialog(this);
-            if (select == JFileChooser.APPROVE_OPTION) {
-                File path = file.getSelectedFile();
-                archivo = new LeerArchivo(path, txtArea);                
-            }
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "Error", "Carga de Archivo", JOptionPane.ERROR_MESSAGE);
-        }      
-    }//GEN-LAST:event_itemCargarDatosActionPerformed
+    private void itemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAbrirActionPerformed
+        // Evento Abrur Archivo 
+        JFileChooser file = new JFileChooser();
+        file.setApproveButtonText("Abrir");
+        aux = archivo.obtenerPath(file, this);
+        archivo.abrirArchivo(aux, txtArea);
+    }//GEN-LAST:event_itemAbrirActionPerformed
 
     private void btnAnalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalizarMouseClicked
         // Evento Analizar
@@ -186,10 +195,18 @@ public class Principal extends JFrame {
         new Tokens(this, true, true).setVisible(true);
     }//GEN-LAST:event_itemRTokensActionPerformed
 
+    private void itemGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarComoActionPerformed
+        // Evento Guardar Como - Archivo (txt)
+        JFileChooser file = new JFileChooser();
+        file.setApproveButtonText("Guardar");
+        archivo.guardarComoArchivo(file, txtArea, this);
+    }//GEN-LAST:event_itemGuardarComoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizar;
-    private javax.swing.JMenuItem itemCargarDatos;
+    private javax.swing.JMenuItem itemAbrir;
     private javax.swing.JMenuItem itemGuardar;
+    private javax.swing.JMenuItem itemGuardarComo;
     private javax.swing.JMenuItem itemRErrores;
     private javax.swing.JMenuItem itemRTokens;
     private javax.swing.JMenu menuArchivos;
