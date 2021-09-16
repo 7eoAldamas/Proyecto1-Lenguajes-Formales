@@ -1,28 +1,24 @@
 package com.gt.modelo;
 
-import com.gt.control.tokenizer.enums.Tipos;
-
-public class Token {
+public class TokenE {
 //--- 
     
-    private Tipos tipoToken;
     private String lexema;
     private int fila;
     private int col;    
-    
-    public Token(Tipos tipoToken, String lexema, int fila, int col) {
-        this.tipoToken = tipoToken;
-        this.lexema = lexema;        
+
+    public TokenE(String lexema, int fila, int col) {
+        this.lexema = lexema;
         this.fila = fila;
         this.col = col;
     }
 
-    public Tipos getTipoToken() {
-        return tipoToken;
-    }
-
     public String getLexema() {
         return lexema;
+    }
+
+    public void setLexema(String lexema) {
+        this.lexema = lexema;
     }
 
     public int getFila() {
@@ -44,7 +40,7 @@ public class Token {
     //--- Información
     @Override
     public String toString() {
-        return  "Token = " + tipoToken + ", lexema = " + lexema + ", fila = " + fila + ", columna = " + col;
+        return "TokenE = " + ", lexema = " + lexema + ", fila = " + fila + ", col = " + col;
     }
     
 }

@@ -27,6 +27,7 @@ public class Principal extends JFrame {
         scrollPArea = new javax.swing.JScrollPane();
         txtArea = new javax.swing.JTextArea();
         scrollPLog = new javax.swing.JScrollPane();
+        txtLog = new javax.swing.JTextArea();
         btnAnalizar = new javax.swing.JButton();
         menuP = new javax.swing.JMenuBar();
         menuArchivos = new javax.swing.JMenu();
@@ -47,6 +48,10 @@ public class Principal extends JFrame {
         txtArea.setColumns(20);
         txtArea.setRows(5);
         scrollPArea.setViewportView(txtArea);
+
+        txtLog.setColumns(20);
+        txtLog.setRows(5);
+        scrollPLog.setViewportView(txtLog);
 
         btnAnalizar.setText("Analizar");
         btnAnalizar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -186,7 +191,7 @@ public class Principal extends JFrame {
     private void btnAnalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalizarMouseClicked
         // Evento Analizar
         if (txtArea.getText() != null) {
-            validaciones.automata(validaciones.leerTexto(txtArea));
+            validaciones.inicio(txtArea, txtLog);
         } else {
             JOptionPane.showMessageDialog(txtArea, "La acción no se puede ejecutar", "Información", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -224,5 +229,6 @@ public class Principal extends JFrame {
     private javax.swing.JScrollPane scrollPArea;
     private javax.swing.JScrollPane scrollPLog;
     private javax.swing.JTextArea txtArea;
+    private javax.swing.JTextArea txtLog;
     // End of variables declaration//GEN-END:variables
 }

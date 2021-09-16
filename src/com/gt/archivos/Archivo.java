@@ -13,10 +13,6 @@ import javax.swing.JTextArea;
 public class Archivo {
 //---
 
-    //--- Constructor de Lectura de Archivos
-    public Archivo() {
-    }
-
     //--- Lectura de Archivo
     public void leerArchivo(File path, JTextArea txtArea) {
         try (FileReader file = new FileReader(path);

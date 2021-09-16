@@ -6,8 +6,6 @@ import javax.swing.JTextField;
 public class Patron {
 //---
     
-    public Patron() { }
-    
     //--- Guardar Patrón
     public void guardarPatron(JTextField txtFPatron) {        
         if (txtFPatron.getText() != null) {
