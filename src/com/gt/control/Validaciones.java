@@ -1,7 +1,6 @@
 package com.gt.control;
 
-import static com.gt.control.tokenizer.enums.Tipos.*;
-import com.gt.control.tokenizer.enums.Tipos;
+import static com.gt.control.enums.Tipos.*;
 import com.gt.modelo.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -11,7 +10,8 @@ public class Validaciones {
 //---    
     
     private List<Token> rTokenValido = new ArrayList<>();
-    private List<TokenE> rtokenErroneo = new ArrayList<>();
+    private List<Token> rtokenErroneo = new ArrayList<>();
+    private Reportes reportes = new Reportes();
     private String cadena;
     private int pos = 0;
     private int estadoActual = 0;
@@ -64,11 +64,19 @@ public class Validaciones {
                 int auxEstado = estadoActual;
                 estadoActual = validarSiguienteEstado(estadoActual, caracter);
                 token += caracter;   
-                txtLog.append("Estado ->  " +auxEstado+ "     |     Transición ->  "+estadoActual+"     |     Caracter [ "+caracter+" ]\n");                
+                txtLog.append("Estado ->  " +auxEstado+ "     |     Transición ->  "+estadoActual+"     |     Caracter [ "+caracter+" ]");                
+                txtLog.append("\n");
             }
-            pos++;
-        }
-        txtLog.append("\n");
+            pos++;     
+        }  
+        if (token != null) {
+            if (getToken().equals("Error")) {                
+               rtokenErroneo.add(new Token(getToken(), token, 1, 1));
+            } else {
+               rTokenValido.add(new Token(getToken(), token, 1, 1));
+            }
+            txtLog.append("\n");
+        }              
     }
     
     //--- Movimiento en la Matriz de Transición δ 
@@ -99,16 +107,16 @@ public class Validaciones {
     }
     
     //--- Tipo Token
-    public Tipos getToken() {
-        Tipos token = null; 
+    public String getToken() {
+        String token = null; 
         switch(estadoActual) {
-            case 2, 3 -> {token = IDENTIFICADOR;}
-            case 4 -> {token = NUM_ENTERO;}
-            case 6 -> {token = NUM_DECIMAL;}
-            case 7 -> {token = SIGNO_PUNTUACION;}
-            case 8 -> {token = OPERADOR;}
-            case 9 -> {token = SIGNO_AGRUPACION;}
-            default -> {token = ERROR;}
+            case 2, 3 -> {token = IDENTIFICADOR.getTipoToken();}
+            case 4 -> {token = NUM_ENTERO.getTipoToken();}
+            case 6 -> {token = NUM_DECIMAL.getTipoToken();}
+            case 7 -> {token = SIGNO_PUNTUACION.getTipoToken();}
+            case 8 -> {token = OPERADOR.getTipoToken();}
+            case 9 -> {token = SIGNO_AGRUPACION.getTipoToken();}
+            default -> {token = ERROR.getTipoToken();}
         }        
         return token;
     }
@@ -182,5 +190,13 @@ public class Validaciones {
         }
         return isValido;
     }
-    
+
+    public List<Token> getrTokenValido() {
+        return rTokenValido;
+    }
+
+    public List<Token> getRtokenErroneo() {
+        return rtokenErroneo;
+    }
+        
 }

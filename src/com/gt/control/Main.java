@@ -7,7 +7,6 @@ public class Main {
 //---     
     public static void main(String[] args) {
         //--- Código Ejecutable
-        System.out.println("Hola Git");
         EventQueue.invokeLater(() -> {
             new Principal().setVisible(true);
         });

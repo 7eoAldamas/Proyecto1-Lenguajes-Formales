@@ -1,4 +1,4 @@
-package com.gt.control.tokenizer.enums;
+package com.gt.control.enums;
 
 public enum Tipos {
 //---      

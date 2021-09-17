@@ -198,13 +198,13 @@ public class Principal extends JFrame {
     }//GEN-LAST:event_btnAnalizarMouseClicked
 
     private void itemRErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRErroresActionPerformed
-        // Evento Reporte de Errores
-        new Errores(this, true, true).setVisible(true);
+        // Evento Reporte de Errores        
+        new Errores(this, true, true, validaciones.getRtokenErroneo()).setVisible(true);
     }//GEN-LAST:event_itemRErroresActionPerformed
 
     private void itemRTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRTokensActionPerformed
         // Evento Reportes de Tokens      
-        new Tokens(this, true, true).setVisible(true);
+        new Tokens(this, true, true, validaciones.getrTokenValido()).setVisible(true);
     }//GEN-LAST:event_itemRTokensActionPerformed
 
     private void itemGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarComoActionPerformed
