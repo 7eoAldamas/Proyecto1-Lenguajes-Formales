@@ -14,6 +14,8 @@ public class Validaciones {
     private Reportes reportes = new Reportes();
     private String cadena;
     private int pos = 0;
+    private int fila;
+    private int col;
     private int estadoActual = 0;
         
     //--- Matriz de Transición δ  
@@ -22,9 +24,9 @@ public class Validaciones {
                               //[0,0][0,1][0,2][0,3][0,4][0,5] 
     private int [][] matrizT = {{1,   4,   7,   8,   9,  -1},
                               //[1,0][1,1][1,2][1,3][1,4][1,5]
-                                {2,   -1,  -1,  -1,  -1,  -1},
+                                {2,   3,  -1,  -1,  -1,  -1},
                               //[2,0][2,1][2,2][2,3][2,4][2,5]  
-                                {2,  3,  -1,  -1,  -1,  -1},
+                                {2,  -1,  -1,  -1,  -1,  -1},
                               //[3,0][3,1][3,2][3,3][3,4][3,5]  
                                 {-1,  3,  -1,  -1,  -1,  -1},
                               //[4,0][4,1][4,2][4,3][4,4][4,5]  
@@ -41,22 +43,25 @@ public class Validaciones {
                                 {-1,  -1,  -1,  -1,  9,  -1},};
         
     //--- Inicio
-    public void inicio(JTextArea txtArea, JTextArea txtLog) {
+    public void analizarToken(JTextArea txtArea, JTextArea txtLog) {
         txtLog.selectAll();
         txtLog.replaceSelection(null);
         cadena = txtArea.getText();
         while (pos < cadena.length()) {            
-            analizarToken(txtLog);
+            token(txtLog);
         }
     }
     
     //--- Validación de Tokens
-    public void analizarToken(JTextArea txtLog) {
+    public void token(JTextArea txtLog) {
         boolean siguiente = true;
         char caracter;
         estadoActual = 0;
         String token = "";
-        while (siguiente && (pos < cadena.length())) {            
+        fila = 1;
+        col = 0;
+        
+        while (siguiente && (pos < cadena.length())) {  
             caracter = cadena.charAt(pos);
             if (isEspacio(caracter)) {
                 siguiente = false;
@@ -67,16 +72,16 @@ public class Validaciones {
                 txtLog.append("Estado ->  " +auxEstado+ "     |     Transición ->  "+estadoActual+"     |     Caracter [ "+caracter+" ]");                
                 txtLog.append("\n");
             }
-            pos++;     
+            pos++;
         }  
-        if (token != null) {
-            if (getToken().equals("Error")) {                
-               rtokenErroneo.add(new Token(getToken(), token, 1, 1));
+        if (!token.isEmpty()) {
+            if (!token.isEmpty() && getToken().equals("Error")) {                
+               rtokenErroneo.add(new Token(getToken(), token, fila, (col - 1)));
             } else {
-               rTokenValido.add(new Token(getToken(), token, 1, 1));
+               rTokenValido.add(new Token(getToken(), token, fila, (col - 1)));
             }
             txtLog.append("\n");
-        }              
+        }
     }
     
     //--- Movimiento en la Matriz de Transición δ 
@@ -108,7 +113,7 @@ public class Validaciones {
     
     //--- Tipo Token
     public String getToken() {
-        String token = null; 
+        String token; 
         switch(estadoActual) {
             case 2, 3 -> {token = IDENTIFICADOR.getTipoToken();}
             case 4 -> {token = NUM_ENTERO.getTipoToken();}

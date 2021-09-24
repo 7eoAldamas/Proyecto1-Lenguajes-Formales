@@ -1,6 +1,7 @@
 package com.gt.vista.GUI;
 
 import com.gt.archivos.Archivo;
+import com.gt.control.Reportes;
 import com.gt.control.Validaciones;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -35,8 +36,6 @@ public class Principal extends JFrame {
         itemGuardar = new javax.swing.JMenuItem();
         itemGuardarComo = new javax.swing.JMenuItem();
         menuReportes = new javax.swing.JMenu();
-        itemRErrores = new javax.swing.JMenuItem();
-        itemRTokens = new javax.swing.JMenuItem();
         menuBuscar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -121,23 +120,11 @@ public class Principal extends JFrame {
         menuP.add(menuArchivos);
 
         menuReportes.setText("Reportes");
-
-        itemRErrores.setText("Errores");
-        itemRErrores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemRErroresActionPerformed(evt);
+        menuReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuReportesMouseClicked(evt);
             }
         });
-        menuReportes.add(itemRErrores);
-
-        itemRTokens.setText("Tokens");
-        itemRTokens.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemRTokensActionPerformed(evt);
-            }
-        });
-        menuReportes.add(itemRTokens);
-
         menuP.add(menuReportes);
 
         menuBuscar.setText("Buscar");
@@ -181,7 +168,7 @@ public class Principal extends JFrame {
     }//GEN-LAST:event_itemGuardarActionPerformed
 
     private void itemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAbrirActionPerformed
-        // Evento Abrur Archivo 
+        // Evento Abrir Archivo 
         JFileChooser file = new JFileChooser();
         file.setApproveButtonText("Abrir");
         aux = archivo.obtenerPath(file, this);
@@ -191,21 +178,12 @@ public class Principal extends JFrame {
     private void btnAnalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalizarMouseClicked
         // Evento Analizar
         if (txtArea.getText() != null) {
-            validaciones.inicio(txtArea, txtLog);
+            validaciones = new Validaciones();
+            validaciones.analizarToken(txtArea, txtLog);
         } else {
             JOptionPane.showMessageDialog(txtArea, "La acción no se puede ejecutar", "Información", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnAnalizarMouseClicked
-
-    private void itemRErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRErroresActionPerformed
-        // Evento Reporte de Errores        
-        new Errores(this, true, true, validaciones.getRtokenErroneo()).setVisible(true);
-    }//GEN-LAST:event_itemRErroresActionPerformed
-
-    private void itemRTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRTokensActionPerformed
-        // Evento Reportes de Tokens      
-        new Tokens(this, true, true, validaciones.getrTokenValido()).setVisible(true);
-    }//GEN-LAST:event_itemRTokensActionPerformed
 
     private void itemGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarComoActionPerformed
         // Evento Guardar Como - Archivo (txt)
@@ -214,13 +192,22 @@ public class Principal extends JFrame {
         archivo.guardarComoArchivo(file, txtArea, this);
     }//GEN-LAST:event_itemGuardarComoActionPerformed
 
+    private void menuReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuReportesMouseClicked
+        // Evento Visualizar Reporte de Tokens         
+        if (validaciones.getRtokenErroneo().isEmpty() && validaciones.getrTokenValido().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sin Registros", "Información", JOptionPane.INFORMATION_MESSAGE);
+        }else if (validaciones.getRtokenErroneo().isEmpty()) {
+            new TokenR(this, true, true, validaciones.getrTokenValido()).setVisible(true);   
+        } else {
+            new Error(this, true, true, validaciones.getRtokenErroneo()).setVisible(true);   
+        }
+    }//GEN-LAST:event_menuReportesMouseClicked
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizar;
     private javax.swing.JMenuItem itemAbrir;
     private javax.swing.JMenuItem itemGuardar;
     private javax.swing.JMenuItem itemGuardarComo;
-    private javax.swing.JMenuItem itemRErrores;
-    private javax.swing.JMenuItem itemRTokens;
     private javax.swing.JMenu menuArchivos;
     private javax.swing.JMenu menuBuscar;
     private javax.swing.JMenuBar menuP;

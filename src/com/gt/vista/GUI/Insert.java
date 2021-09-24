@@ -28,7 +28,7 @@ public class Insert extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Patrón");
 
-        panelD.setBackground(new java.awt.Color(51, 255, 147));
+        panelD.setBackground(new java.awt.Color(218, 247, 166));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -77,8 +77,7 @@ public class Insert extends javax.swing.JDialog {
         patron.guardarPatron(txtFPatron);
         dispose();
     }//GEN-LAST:event_btnBuscarMouseClicked
-    
-    
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JPanel panelD;
