@@ -20,7 +20,7 @@ public class Validaciones {
         
     //--- Matriz de Transición δ  
     
-                              // 0-L 1-D 2-SP 3-OP 4-SA 5-Error 
+                              //0-L 1-D 2-SP 3-OP 4-SA 5-Error 
                               //[0,0][0,1][0,2][0,3][0,4][0,5] 
     private int [][] matrizT = {{1,   4,   7,   8,   9,  -1},
                               //[1,0][1,1][1,2][1,3][1,4][1,5]
@@ -79,6 +79,8 @@ public class Validaciones {
             }
             if (estadoActual == -1) {
                 siguiente = false; //Error - Reinicio
+                txtLog.append("*-\t Error     |     Caracter [ "+caracter+" ]");                
+                txtLog.append("\n");
             }
             
             col++;
@@ -90,7 +92,6 @@ public class Validaciones {
             } else {
                rTokenValido.add(new Token(getToken(), token, fila, (col - 1)));
             }
-            txtLog.append("\n");
         }
     }
     

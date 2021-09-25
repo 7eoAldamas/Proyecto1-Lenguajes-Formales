@@ -7,6 +7,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 public class Principal extends JFrame {
 //--- Ventana Principal - Analizador Léxico        
@@ -17,7 +18,7 @@ public class Principal extends JFrame {
 
     public Principal() {
         initComponents();
-        txtArea.setBorder(new Borde());                
+        txtArea.setBorder(new Borde());
         setSize(900, 600);
         setLocationRelativeTo(null);
     }
@@ -200,13 +201,13 @@ public class Principal extends JFrame {
         // Evento Visualizar Reporte de Tokens         
         if (validaciones.getRtokenErroneo().isEmpty() && validaciones.getRTokenValido().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Sin Registros", "Información", JOptionPane.INFORMATION_MESSAGE);
-        }else if (validaciones.getRtokenErroneo().isEmpty()) {
-            new TokenR(this, true, true, validaciones.getRTokenValido()).setVisible(true);   
+        } else if (validaciones.getRtokenErroneo().isEmpty()) {
+            new TokenR(this, true, true, validaciones.getRTokenValido()).setVisible(true);
         } else {
-            new Error(this, true, true, validaciones.getRtokenErroneo()).setVisible(true);   
+            new Error(this, true, true, validaciones.getRtokenErroneo()).setVisible(true);
         }
     }//GEN-LAST:event_menuReportesMouseClicked
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizar;
     private javax.swing.JMenuItem itemAbrir;
@@ -222,4 +223,9 @@ public class Principal extends JFrame {
     private javax.swing.JTextArea txtArea;
     private javax.swing.JTextArea txtLog;
     // End of variables declaration//GEN-END:variables
+
+    public JTextArea getTxtArea() {
+        return txtArea;
+    }
+
 }
