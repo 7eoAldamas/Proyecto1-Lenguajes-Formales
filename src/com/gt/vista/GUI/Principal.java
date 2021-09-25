@@ -1,8 +1,8 @@
 package com.gt.vista.GUI;
 
 import com.gt.archivos.Archivo;
-import com.gt.control.Reportes;
 import com.gt.control.Validaciones;
+import com.gt.vista.Borde;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -17,6 +17,7 @@ public class Principal extends JFrame {
 
     public Principal() {
         initComponents();
+        txtArea.setBorder(new Borde());                
         setSize(900, 600);
         setLocationRelativeTo(null);
     }
@@ -45,7 +46,10 @@ public class Principal extends JFrame {
         panelP.setBackground(new java.awt.Color(218, 247, 166));
 
         txtArea.setColumns(20);
+        txtArea.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtArea.setLineWrap(true);
         txtArea.setRows(5);
+        txtArea.setWrapStyleWord(true);
         scrollPArea.setViewportView(txtArea);
 
         txtLog.setColumns(20);
@@ -194,10 +198,10 @@ public class Principal extends JFrame {
 
     private void menuReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuReportesMouseClicked
         // Evento Visualizar Reporte de Tokens         
-        if (validaciones.getRtokenErroneo().isEmpty() && validaciones.getrTokenValido().isEmpty()) {
+        if (validaciones.getRtokenErroneo().isEmpty() && validaciones.getRTokenValido().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Sin Registros", "Información", JOptionPane.INFORMATION_MESSAGE);
         }else if (validaciones.getRtokenErroneo().isEmpty()) {
-            new TokenR(this, true, true, validaciones.getrTokenValido()).setVisible(true);   
+            new TokenR(this, true, true, validaciones.getRTokenValido()).setVisible(true);   
         } else {
             new Error(this, true, true, validaciones.getRtokenErroneo()).setVisible(true);   
         }

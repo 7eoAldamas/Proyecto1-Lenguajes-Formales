@@ -7,7 +7,7 @@ public enum Tipos {
     NUM_ENTERO("Número Entero"),
     NUM_DECIMAL("Número Decimal"),
     SIGNO_PUNTUACION("Signo de Puntuación"),
-    OPERADOR("Operadores Aritméticos"),
+    OPERADOR("Operador Aritmético"),
     SIGNO_AGRUPACION("Signo de Agrupación"),
     ERROR("Error");
     

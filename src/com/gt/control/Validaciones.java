@@ -9,13 +9,13 @@ import javax.swing.JTextArea;
 public class Validaciones {
 //---    
     
-    private List<Token> rTokenValido = new ArrayList<>();
-    private List<Token> rtokenErroneo = new ArrayList<>();
-    private Reportes reportes = new Reportes();
+    private final List<Token> rTokenValido = new ArrayList<>();
+    private final List<Token> rtokenErroneo = new ArrayList<>();
     private String cadena;
+    private boolean isFila = false;
     private int pos = 0;
-    private int fila;
-    private int col;
+    private int fila = 1;
+    private int col = 0;
     private int estadoActual = 0;
         
     //--- Matriz de Transición δ  
@@ -42,7 +42,7 @@ public class Validaciones {
                               //[9,0][9,1][9,2][9,3][9,4][9,5]
                                 {-1,  -1,  -1,  -1,  9,  -1},};
         
-    //--- Inicio
+    //--- Analizar Token
     public void analizarToken(JTextArea txtArea, JTextArea txtLog) {
         txtLog.selectAll();
         txtLog.replaceSelection(null);
@@ -58,25 +58,35 @@ public class Validaciones {
         char caracter;
         estadoActual = 0;
         String token = "";
-        fila = 1;
-        col = 0;
         
-        while (siguiente && (pos < cadena.length())) {  
-            caracter = cadena.charAt(pos);
+        while (siguiente && (pos < cadena.length())) {                          
+            if (isFila) {
+                fila++;
+                col = 0;
+            }
+            
+            caracter = cadena.charAt(pos);                                    
+            
             if (isEspacio(caracter)) {
                 siguiente = false;
             } else {
+                isFila = false;
                 int auxEstado = estadoActual;
                 estadoActual = validarSiguienteEstado(estadoActual, caracter);
-                token += caracter;   
+                token += caracter;  
                 txtLog.append("Estado ->  " +auxEstado+ "     |     Transición ->  "+estadoActual+"     |     Caracter [ "+caracter+" ]");                
                 txtLog.append("\n");
             }
+            if (estadoActual == -1) {
+                siguiente = false; //Error - Reinicio
+            }
+            
+            col++;
             pos++;
         }  
-        if (!token.isEmpty()) {
-            if (!token.isEmpty() && getToken().equals("Error")) {                
-               rtokenErroneo.add(new Token(getToken(), token, fila, (col - 1)));
+        if (!token.isBlank()) {
+            if (!token.isBlank()&& getToken().equals("Error")) {                
+               rtokenErroneo.add(new Token(getToken(), token, this.fila, (col - 1)));
             } else {
                rTokenValido.add(new Token(getToken(), token, fila, (col - 1)));
             }
@@ -115,7 +125,7 @@ public class Validaciones {
     public String getToken() {
         String token; 
         switch(estadoActual) {
-            case 2, 3 -> {token = IDENTIFICADOR.getTipoToken();}
+            case 1, 2, 3 -> {token = IDENTIFICADOR.getTipoToken();}
             case 4 -> {token = NUM_ENTERO.getTipoToken();}
             case 6 -> {token = NUM_DECIMAL.getTipoToken();}
             case 7 -> {token = SIGNO_PUNTUACION.getTipoToken();}
@@ -189,14 +199,16 @@ public class Validaciones {
     public boolean isEspacio(char caracter) {
         boolean isValido = false;
         switch(caracter) {
-            case '\n' -> {isValido = true;}
+            case '\n' -> {
+                isFila = true;
+                isValido = true;}
             case ' ' -> {isValido = true;}
             case '\t' -> {isValido = true;}
         }
         return isValido;
-    }
+    }    
 
-    public List<Token> getrTokenValido() {
+    public List<Token> getRTokenValido() {
         return rTokenValido;
     }
 

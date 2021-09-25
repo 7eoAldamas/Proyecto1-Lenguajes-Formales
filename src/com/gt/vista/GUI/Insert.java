@@ -28,7 +28,7 @@ public class Insert extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Patrón");
 
-        panelD.setBackground(new java.awt.Color(218, 247, 166));
+        panelD.setBackground(new java.awt.Color(230, 176, 170));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
