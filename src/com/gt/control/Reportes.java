@@ -17,9 +17,9 @@ public class Reportes {
 
         tablaTokens.setModel(modelo);
         
-        for (Token t : listaTokens) {
+        listaTokens.forEach(t -> {
             modelo.addRow(new Object[]{t.getTipoToken(), t.getLexema(), t.getFila(), t.getCol()});
-        }        
+        });        
     }
     
     public static void tablaRecuento(List<Token> listaTokens, JTable tablaTokens) {
@@ -30,9 +30,9 @@ public class Reportes {
 
         tablaTokens.setModel(modelo);
         
-        for (Token t : listaTokens) {
-            modelo.addRow(new Object[]{t.getTipoToken(), t.getLexema()});
-        }        
+        listaTokens.forEach(t -> {
+            modelo.addRow(new Object[]{t.getTipoToken(), t.getLexema(), t.getCantidad()});
+        });        
     }
    
 }

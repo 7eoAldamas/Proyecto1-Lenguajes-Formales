@@ -6,7 +6,8 @@ public class Token {
     private String tipoToken;
     private String lexema;
     private int fila;
-    private int col;    
+    private int col; 
+    private int cantidad;
     
     public Token(String tipoToken, String lexema, int fila, int col) {
         this.tipoToken = tipoToken;
@@ -15,6 +16,12 @@ public class Token {
         this.col = col;
     }
 
+    public Token(String tipoToken, String lexema, int cantidad) {
+        this.tipoToken = tipoToken;
+        this.lexema = lexema;
+        this.cantidad = cantidad;
+    }
+    
     public String getTipoToken() {
         return tipoToken;
     }
@@ -38,5 +45,13 @@ public class Token {
     public void setCol(int col) {
         this.col = col;
     }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }    
 
 }

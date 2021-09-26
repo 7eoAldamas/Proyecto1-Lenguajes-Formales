@@ -53,8 +53,12 @@ public class Principal extends JFrame {
         txtArea.setWrapStyleWord(true);
         scrollPArea.setViewportView(txtArea);
 
+        txtLog.setEditable(false);
         txtLog.setColumns(20);
+        txtLog.setLineWrap(true);
         txtLog.setRows(5);
+        txtLog.setWrapStyleWord(true);
+        txtLog.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         scrollPLog.setViewportView(txtLog);
 
         btnAnalizar.setText("Analizar");
@@ -202,7 +206,7 @@ public class Principal extends JFrame {
         if (validaciones.getRtokenErroneo().isEmpty() && validaciones.getRTokenValido().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Sin Registros", "Información", JOptionPane.INFORMATION_MESSAGE);
         } else if (validaciones.getRtokenErroneo().isEmpty()) {
-            new TokenR(this, true, true, validaciones.getRTokenValido()).setVisible(true);
+            new TokenR(this, true, true, validaciones.getRTokenValido(), validaciones.contarToken()).setVisible(true);
         } else {
             new Error(this, true, true, validaciones.getRtokenErroneo()).setVisible(true);
         }

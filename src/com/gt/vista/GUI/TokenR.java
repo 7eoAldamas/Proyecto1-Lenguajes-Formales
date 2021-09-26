@@ -11,13 +11,13 @@ public class TokenR extends JDialog {
     private Principal menu;
     private boolean init;
     
-    public TokenR(Principal parent, boolean modal, boolean init, List<Token> listaTokens) {
+    public TokenR(Principal parent, boolean modal, boolean init, List<Token> listaTokens, List<Token> recuento) {
         super(parent, modal);
         initComponents();
         this.menu = parent;
         this.init = init;
         Reportes.tablaTokens(listaTokens, tablaTokens);
-        Reportes.tablaRecuento(listaTokens, tablaRecuentoT);
+        Reportes.tablaRecuento(recuento, tablaRecuentoT);
         setSize(600, 600);
         setLocationRelativeTo(null);
     }
@@ -64,7 +64,7 @@ public class TokenR extends JDialog {
         ));
         scrollRecuentoT.setViewportView(tablaRecuentoT);
 
-        lblRecuento.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        lblRecuento.setFont(new java.awt.Font("Segoe UI", 2, 20)); // NOI18N
         lblRecuento.setForeground(new java.awt.Color(0, 0, 0));
         lblRecuento.setText("Recuento de Tokens");
 
@@ -80,7 +80,7 @@ public class TokenR extends JDialog {
                             .addComponent(scrollRecuentoT, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(scrollPRT, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelTokensLayout.createSequentialGroup()
-                        .addGap(236, 236, 236)
+                        .addGap(197, 197, 197)
                         .addComponent(lblRecuento)))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
@@ -93,7 +93,7 @@ public class TokenR extends JDialog {
                 .addComponent(lblRecuento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(scrollRecuentoT, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

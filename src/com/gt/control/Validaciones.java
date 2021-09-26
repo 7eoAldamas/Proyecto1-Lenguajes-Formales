@@ -10,7 +10,7 @@ public class Validaciones {
 //---    
     
     private final List<Token> rTokenValido = new ArrayList<>();
-    private final List<Token> rtokenErroneo = new ArrayList<>();
+    private final List<Token> rTokenErroneo = new ArrayList<>();
     private String cadena;
     private boolean isFila = false;
     private int pos = 0;
@@ -74,21 +74,22 @@ public class Validaciones {
                 int auxEstado = estadoActual;
                 estadoActual = validarSiguienteEstado(estadoActual, caracter);
                 token += caracter;  
-                txtLog.append("Estado ->  " +auxEstado+ "     |     Transición ->  "+estadoActual+"     |     Caracter [ "+caracter+" ]");                
-                txtLog.append("\n");
+                txtLog.append("Estado ->  " +auxEstado+ "     |     Transición ->  "+estadoActual+"     |     Caracter [ "+caracter+" ]".concat("\n"));                
             }
             if (estadoActual == -1) {
                 siguiente = false; //Error - Reinicio
-                txtLog.append("*-\t Error     |     Caracter [ "+caracter+" ]");                
-                txtLog.append("\n");
+                pos--;
+                txtLog.append("*-\t Error     |     Caracter [ "+caracter+" ]".concat("\n"));
+                txtLog.append("*-\t Posible Token -----------------------------");
             }
             
             col++;
             pos++;
         }  
+        txtLog.append("\n");
         if (!token.isBlank()) {
             if (!token.isBlank()&& getToken().equals("Error")) {                
-               rtokenErroneo.add(new Token(getToken(), token, this.fila, (col - 1)));
+               rTokenErroneo.add(new Token(getToken(), token, this.fila, (col - 1)));
             } else {
                rTokenValido.add(new Token(getToken(), token, fila, (col - 1)));
             }
@@ -98,7 +99,7 @@ public class Validaciones {
     //--- Movimiento en la Matriz de Transición δ 
     public int validarSiguienteEstado(int estadoActual, char caracter) {
         int siguienteEstado = -1;
-        if (estadoActual >= 0 && estadoActual <=6) { 
+        if (estadoActual >= 0 && estadoActual <=5) { 
             siguienteEstado = matrizT[estadoActual][evaluarAlfabeto(caracter)];
         }
         return siguienteEstado;
@@ -135,6 +136,28 @@ public class Validaciones {
             default -> {token = ERROR.getTipoToken();}
         }        
         return token;
+    }
+    
+    //--- Recuento de Tokens Válidos
+    public List<Token> contarToken() {
+        List<Token> recuento = new ArrayList<>();
+        boolean isRepetido;
+        
+        for (Token token : rTokenValido) {
+            isRepetido = false;
+            for (Token contador : recuento) {
+                if (contador.getLexema().equals(token.getLexema())) { //Evaluación de Lexema
+                    isRepetido = true;
+                    int cantidad = contador.getCantidad();
+                    contador.setCantidad(cantidad + 1); //Aumentar la cantidad de existencia
+                }
+            } 
+            if (!isRepetido) {
+                                     //Tipo Token           Cadena - Lexema    Cantidad Inicial 
+                recuento.add(new Token(token.getTipoToken(), token.getLexema(), 1));
+            }
+        }
+        return recuento;
     }
         
     //--- Alfabeto Permitido
@@ -214,7 +237,7 @@ public class Validaciones {
     }
 
     public List<Token> getRtokenErroneo() {
-        return rtokenErroneo;
+        return rTokenErroneo;
     }
         
 }
