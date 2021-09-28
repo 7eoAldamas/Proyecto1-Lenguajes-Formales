@@ -18,14 +18,14 @@ public class Borde extends AbstractBorder {
     private JViewport viewport; //Deslizamiento
 
     @Override             //Componente -txtArea              Eje X  | Eje Y |  Ancho  |  Altura
-    public void paintBorder(Component ccomponent, Graphics g, int x, int y, int width, int height) {
+    public void paintBorder(Component component, Graphics g, int x, int y, int width, int height) {
         int posY; //Pos - Eje Y
         int posX; //Pos - Eje X      
         int pos = 0; //Posición        
         int tamanio;
 
         if (this.viewport == null) {
-            buscarViewport(ccomponent);
+            buscarViewport(component);
         }
 
         Point point;
@@ -72,6 +72,7 @@ public class Borde extends AbstractBorder {
         return new Insets(1, iz, 1, 1);
     }
 
+    //--- Búsqueda del Componente
     private void buscarViewport(Component component) {
         Container parent = component.getParent();
         if (parent instanceof JViewport parentViewport) {
@@ -79,6 +80,7 @@ public class Borde extends AbstractBorder {
         }
     }
 
+    //--- Posicionamineto parte izquierda
     private int ubicacionIz(int height) {
         int auxFila = (height / alturaLinea);
         int fila = (auxFila + 1);

@@ -9,8 +9,8 @@ import javax.swing.JTextArea;
 public class Validaciones {
 //---    
     
-    private final List<Token> rTokenValido = new ArrayList<>();
-    private final List<Token> rTokenErroneo = new ArrayList<>();
+    private List<Token> rTokenValido = new ArrayList<>();
+    private List<Token> rTokenErroneo = new ArrayList<>();
     private String cadena;
     private boolean isFila = false;
     private int pos = 0;
@@ -41,7 +41,7 @@ public class Validaciones {
                                 {-1,  -1,  -1,  8,  -1,  -1},
                               //[9,0][9,1][9,2][9,3][9,4][9,5]
                                 {-1,  -1,  -1,  -1,  9,  -1},};
-        
+
     //--- Analizar Token
     public void analizarToken(JTextArea txtArea, JTextArea txtLog) {
         txtLog.selectAll();
@@ -67,28 +67,31 @@ public class Validaciones {
             
             caracter = cadena.charAt(pos);                                    
             
-            if (isEspacio(caracter)) {
+            if (Character.isWhitespace(caracter)) {
                 siguiente = false;
             } else {
                 isFila = false;
                 int auxEstado = estadoActual;
                 estadoActual = validarSiguienteEstado(estadoActual, caracter);
                 token += caracter;  
-                txtLog.append("Estado ->  " +auxEstado+ "     |     Transición ->  "+estadoActual+"     |     Caracter [ "+caracter+" ]".concat("\n"));                
-            }
-            if (estadoActual == -1) {
-                siguiente = false; //Error - Reinicio
-                pos--;
-                txtLog.append("*-\t Error     |     Caracter [ "+caracter+" ]".concat("\n"));
-                txtLog.append("*-\t Posible Token -----------------------------");
+                txtLog.append("Estado ->  " +auxEstado+ "     |     Transición ->  "+estadoActual+"     |     Caracter [ "+caracter+" ]");                
+                txtLog.append("\n");
+                
+                if (estadoActual == -1) {
+                    siguiente = false; //Error - Reinicio                
+                    txtLog.append("*-\t Error     |     Caracter [ "+caracter+" ]");
+                    txtLog.append("\n");
+                    txtLog.append("*-\t Posible Token -----------------------------");
+                }            
             }
             
             col++;
             pos++;
+            isFila(caracter);
         }  
         txtLog.append("\n");
         if (!token.isBlank()) {
-            if (!token.isBlank()&& getToken().equals("Error")) {                
+            if (!token.isBlank() && getToken().equals("Error")) {                
                rTokenErroneo.add(new Token(getToken(), token, this.fila, (col - 1)));
             } else {
                rTokenValido.add(new Token(getToken(), token, fila, (col - 1)));
@@ -99,8 +102,13 @@ public class Validaciones {
     //--- Movimiento en la Matriz de Transición δ 
     public int validarSiguienteEstado(int estadoActual, char caracter) {
         int siguienteEstado = -1;
-        if (estadoActual >= 0 && estadoActual <=5) { 
-            siguienteEstado = matrizT[estadoActual][evaluarAlfabeto(caracter)];
+        try {
+            if (estadoActual >= 0 && estadoActual <=9) { 
+                siguienteEstado = matrizT[estadoActual][evaluarAlfabeto(caracter)];
+                System.out.println(siguienteEstado);
+            }   
+        } catch (Exception e) {
+            System.out.println("Error");
         }
         return siguienteEstado;
     }
@@ -165,8 +173,9 @@ public class Validaciones {
     //--- Letras
     public boolean isLetra(char caracter) {
         boolean isValido = false;
-        if (((caracter >= 'a') && (caracter <= 'z') || (caracter >= 'A') && (caracter <= 'Z')) && (caracter != 'ñ')) {
+        if ((caracter != 'ñ') && ((caracter >= 'a') && (caracter <= 'z') || (caracter >= 'A') && (caracter <= 'Z'))) {
             isValido = true;
+        } else {
         }
         return isValido;
     }   
@@ -218,20 +227,13 @@ public class Validaciones {
         }
         return isValido;
     }
-    
-    //--- Espacio y/o salto de línea
-    public boolean isEspacio(char caracter) {
-        boolean isValido = false;
-        switch(caracter) {
-            case '\n' -> {
-                isFila = true;
-                isValido = true;}
-            case ' ' -> {isValido = true;}
-            case '\t' -> {isValido = true;}
-        }
-        return isValido;
-    }    
 
+    public void isFila(char caracter) {
+        if (caracter == '\n') {
+            isFila = true;
+        }
+    }
+    
     public List<Token> getRTokenValido() {
         return rTokenValido;
     }

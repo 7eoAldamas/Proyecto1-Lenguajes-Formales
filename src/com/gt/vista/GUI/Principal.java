@@ -48,9 +48,7 @@ public class Principal extends JFrame {
 
         txtArea.setColumns(20);
         txtArea.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        txtArea.setLineWrap(true);
         txtArea.setRows(5);
-        txtArea.setWrapStyleWord(true);
         scrollPArea.setViewportView(txtArea);
 
         txtLog.setEditable(false);
@@ -62,9 +60,9 @@ public class Principal extends JFrame {
         scrollPLog.setViewportView(txtLog);
 
         btnAnalizar.setText("Analizar");
-        btnAnalizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAnalizarMouseClicked(evt);
+        btnAnalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnalizarActionPerformed(evt);
             }
         });
 
@@ -78,11 +76,11 @@ public class Principal extends JFrame {
                         .addGap(97, 97, 97)
                         .addComponent(scrollPArea, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelPLayout.createSequentialGroup()
-                        .addGap(392, 392, 392)
-                        .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelPLayout.createSequentialGroup()
                         .addGap(157, 157, 157)
-                        .addComponent(scrollPLog, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(scrollPLog, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelPLayout.createSequentialGroup()
+                        .addGap(393, 393, 393)
+                        .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(97, Short.MAX_VALUE))
         );
         panelPLayout.setVerticalGroup(
@@ -90,11 +88,11 @@ public class Principal extends JFrame {
             .addGroup(panelPLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(scrollPArea, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
+                .addGap(53, 53, 53)
                 .addComponent(btnAnalizar)
-                .addGap(45, 45, 45)
-                .addComponent(scrollPLog, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(scrollPLog, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         menuArchivos.setText("Archivos");
@@ -172,7 +170,7 @@ public class Principal extends JFrame {
             File auxPath = aux.getAbsoluteFile();
             archivo.guardarArchivo(auxPath, txtArea);
         } else {
-            JOptionPane.showMessageDialog(txtArea, "La acción no se puede ejecutar", "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(txtArea, "La acción no se puede ejecutar\nPresione Guardar Como", "Información", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_itemGuardarActionPerformed
 
@@ -183,16 +181,6 @@ public class Principal extends JFrame {
         aux = archivo.obtenerPath(file, this);
         archivo.abrirArchivo(aux, txtArea);
     }//GEN-LAST:event_itemAbrirActionPerformed
-
-    private void btnAnalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalizarMouseClicked
-        // Evento Analizar
-        if (txtArea.getText() != null) {
-            validaciones = new Validaciones();
-            validaciones.analizarToken(txtArea, txtLog);
-        } else {
-            JOptionPane.showMessageDialog(txtArea, "La acción no se puede ejecutar", "Información", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }//GEN-LAST:event_btnAnalizarMouseClicked
 
     private void itemGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarComoActionPerformed
         // Evento Guardar Como - Archivo (txt)
@@ -211,6 +199,16 @@ public class Principal extends JFrame {
             new Error(this, true, true, validaciones.getRtokenErroneo()).setVisible(true);
         }
     }//GEN-LAST:event_menuReportesMouseClicked
+
+    private void btnAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarActionPerformed
+        // Evento Análisi
+        if (txtArea.getText() != null) {
+            validaciones = new Validaciones();
+            validaciones.analizarToken(txtArea, txtLog);
+        } else {
+            JOptionPane.showMessageDialog(this, "La acción no se puede ejecutar", "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAnalizarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizar;
