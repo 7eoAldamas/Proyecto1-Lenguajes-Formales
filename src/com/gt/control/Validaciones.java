@@ -105,10 +105,8 @@ public class Validaciones {
         try {
             if (estadoActual >= 0 && estadoActual <=9) { 
                 siguienteEstado = matrizT[estadoActual][evaluarAlfabeto(caracter)];
-                System.out.println(siguienteEstado);
             }   
         } catch (Exception e) {
-            System.out.println("Error");
         }
         return siguienteEstado;
     }
